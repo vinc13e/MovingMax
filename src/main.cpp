@@ -21,12 +21,9 @@ int main() {
             const json msg = json::parse(m.message());
             auto rand = msg["rand"].get<int64_t>();
             auto running_max = mm.process(rand);
-            cout << "rand: " <<  rand<< endl;
-            cout << "moving max: " << running_max << endl;
 
             auto msg_out = msg;
             msg_out["running_max"] = running_max;
-            cout << "msg out: " << msg_out << endl;
             publish_topic_f(msg_out);
         }
         catch (std::exception& e) {
@@ -50,7 +47,6 @@ void subscribe_topic_f(std::function<void(const AMQP::Message& m, uint64_t, bool
                                                  AMQP::Login(_user, _pass), "/"));
     AMQP::TcpChannel channel(&connection);
     channel.onError([&handler](const char* message){
-        std::cout << "Channel error: " << message << std::endl;
         handler.Stop();
     });
     channel.declareExchange(_exchange, AMQP::topic);

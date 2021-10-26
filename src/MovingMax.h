@@ -28,7 +28,6 @@ public:
         if(dataQ.size()==max_size){
             //remove the oldest element from both queue and ordered set;
             auto &oldest = dataQ.front();
-            std::cout << "removing " << *oldest << endl;
             dataS.erase(oldest);
             dataQ.pop();
         }
@@ -39,8 +38,6 @@ public:
 
 private:
     using sp_int64_t = std::shared_ptr<T>;
-    static bool cmp(const sp_int64_t& a, const sp_int64_t& b) {return *a < *b;};
-
     int max_size;
 
     std::queue<sp_int64_t> dataQ;
